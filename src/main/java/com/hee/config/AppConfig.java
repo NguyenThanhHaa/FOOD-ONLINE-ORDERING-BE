@@ -25,7 +25,7 @@ public class AppConfig {
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
 
-        http.sessionManagement(managment -> managment.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+        http.sessionManagement(management -> management.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(Authorize -> Authorize
 //                   If request matches /api/admin/**  then it should be available for these roles
                             .requestMatchers("/api/admin/**").hasAnyRole("RESTAURANT_OWNER","ADMIN")
@@ -37,7 +37,7 @@ public class AppConfig {
                 .csrf(csrf->csrf.disable())
                 .cors(cors->cors.configurationSource(corsConfigrationSource()));
 
-        return null;
+        return http.build();
     }
 
     private CorsConfigurationSource corsConfigrationSource() {
