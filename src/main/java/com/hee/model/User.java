@@ -19,7 +19,7 @@ import java.util.List;
 public class User {
 //    Generate unique id automatically by using GenerationType.AUTO
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String fullName;
