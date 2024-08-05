@@ -136,6 +136,8 @@ public class RestaurantServiceImpl implements RestaurantService{
         dto.setTitle(restaurant.getName());
         dto.setId(restaurantId);
 
+        MessageResponse response = new MessageResponse();
+
         if(user.getFavorites().contains(dto)){
             user.getFavorites().remove(dto);
         }
@@ -143,7 +145,6 @@ public class RestaurantServiceImpl implements RestaurantService{
         else user.getFavorites().add(dto);
 
         userRepository.save(user);
-
         return dto;
     }
 
