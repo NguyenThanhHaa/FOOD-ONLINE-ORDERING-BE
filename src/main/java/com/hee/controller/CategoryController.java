@@ -1,8 +1,10 @@
 package com.hee.controller;
 
 import com.hee.model.Category;
+import com.hee.model.Restaurant;
 import com.hee.model.User;
 import com.hee.service.CategoryService;
+import com.hee.service.RestaurantService;
 import com.hee.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,13 +23,20 @@ public class CategoryController {
     @Autowired
     private UserService userService;
 
-    @PostMapping("/admin/category/create")
+    @Autowired
+    private RestaurantService restaurantService;
+
+    @PostMapping("/admin/{restaurantId}/create-category")
     public ResponseEntity<Category> createCategory(
             @RequestBody Category category,
-            @RequestHeader("Authorization") String jwt
+            @RequestHeader("Authorization") String jwt,
+            @PathVariable Long restaurantId
     ) throws Exception {
         User user = userService.findUserByJwtToken(jwt);
-        Category createCategory = categoryService.createCategory(category.getName(),user.getId());
+
+        Restaurant restaurant = restaurantService.findRestaurantById(restaurantId);
+
+        Category createCategory = categoryService.createCategory(category.getName(),user.getId(), restaurant.getId());
 
         return new ResponseEntity<>(createCategory, HttpStatus.CREATED);
     }

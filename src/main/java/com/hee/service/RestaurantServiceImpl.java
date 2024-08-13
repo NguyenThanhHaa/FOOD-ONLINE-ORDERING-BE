@@ -157,4 +157,9 @@ public class RestaurantServiceImpl implements RestaurantService{
 
         return restaurantRepository.save(restaurant);
     }
+
+    @Override
+    public Restaurant getRestaurantByIdAndUserId(Long restaurantId, Long userId) throws Exception {
+        return restaurantRepository.findByIdAndUserId(restaurantId, userId);
+    }
 }

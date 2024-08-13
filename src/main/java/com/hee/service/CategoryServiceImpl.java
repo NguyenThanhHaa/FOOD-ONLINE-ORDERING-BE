@@ -19,8 +19,13 @@ public class CategoryServiceImpl implements CategoryService{
     private CategoryRepository categoryRepository;
 
     @Override
-    public Category createCategory(String name, Long userId) throws Exception {
-        Restaurant restaurant = (Restaurant) restaurantService.getRestaurantByUserId(userId);
+    public Category createCategory(String name, Long userId, Long restaurantId) throws Exception {
+        // Tìm nhà hàng theo restaurantId và userId để đảm bảo đúng user
+        Restaurant restaurant = restaurantService.getRestaurantByIdAndUserId(restaurantId, userId);
+
+        if (restaurant == null) {
+            throw new Exception("No restaurant found for the given restaurantId and userId.");
+        }
 
         Category category = new Category();
         category.setName(name);
@@ -29,9 +34,10 @@ public class CategoryServiceImpl implements CategoryService{
         return categoryRepository.save(category);
     }
 
+
     @Override
     public List<Category> findCategoryByRestaurantId(Long id) throws Exception {
-        Restaurant restaurant = (Restaurant) restaurantService.getRestaurantByUserId(id);
+        Restaurant restaurant =  restaurantService.findRestaurantById(id);
 
         return categoryRepository.findByRestaurantId(restaurant.getId());
     }

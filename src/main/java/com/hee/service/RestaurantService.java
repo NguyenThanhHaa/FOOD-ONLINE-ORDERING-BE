@@ -26,6 +26,8 @@ public interface RestaurantService {
 
     public Restaurant updateRestaurantStatus(Long id) throws Exception;
 
+    public Restaurant getRestaurantByIdAndUserId(Long restaurantId, Long userId) throws Exception;
+
 
 
 }
